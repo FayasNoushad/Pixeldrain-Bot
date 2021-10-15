@@ -13,5 +13,4 @@ def upload(name, file):
     if response.status_code != 200:
         return False
     else:
-        return True
-    
+        return response.json()
