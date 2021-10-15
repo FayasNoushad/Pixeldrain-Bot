@@ -13,4 +13,5 @@ def upload(name, file):
     if response.status_code != 200:
         return False
     else:
-        return response.json()
+        info = requests.get(f"https://pixeldrain.com/api/file/{response.json()["id"]}/info").json()
+        return info
