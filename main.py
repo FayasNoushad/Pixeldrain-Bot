@@ -52,7 +52,7 @@ async def media_filter(bot, update):
         except:
             pass
         await message.edit_text(
-            text="`Uploaded Successfully!",
+            text="`Uploaded Successfully!`",
             disable_web_page_preview=True
         )
         if data["success"] is False:
