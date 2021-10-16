@@ -11,5 +11,4 @@ def upload_file(file):
         return response
     else:
         info = requests.get(f"https://pixeldrain.com/api/file/{response.json()['id']}/info")
-        info["success"] = True
         return info
