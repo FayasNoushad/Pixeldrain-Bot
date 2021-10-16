@@ -63,7 +63,7 @@ async def media_filter(bot, update):
         )
         return
     text = f"**File Name:** `{response['name']}`" + "\n"
-    text += f"**Download Page:** `https://pixeldrain.com/u/{response["id"]}`" + "\n"
+    text += f"**Download Page:** `https://pixeldrain.com/u/{response['id']}`" + "\n"
     text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{response['id']}`" + "\n"
     text += f"**Upload Date:** `{response['date_upload']}`"
     text += f"**Last View Date:** `{response['date_last_view']}`"
