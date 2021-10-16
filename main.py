@@ -44,14 +44,14 @@ async def media_filter(bot, update):
             text="`Uploading...`",
             disable_web_page_preview=True
         )
-        response = pixeldrain.upload_file(media)
+        response, status_code = pixeldrain.upload_file(media)
         try:
             os.remove(media)
         except:
             pass 
         if not response:
             await message.edit_text(
-                text="`I can't upload this file.`",
+                text=f"**Error {status_code}:-** `I can't upload this file.`",
                 disable_web_page_preview=True
             )
             return
