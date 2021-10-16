@@ -44,12 +44,14 @@ async def media_filter(bot, update):
             text="`Uploading...`",
             disable_web_page_preview=True
         )
-        response, status_code = pixeldrain.upload_file(media)
+        response = pixeldrain.upload_file(media)
+        status_code = response.status_code
+        data = response.json()
         try:
             os.remove(media)
         except:
             pass 
-        if not response:
+        if data["success"] is False:
             await message.edit_text(
                 text=f"**Error {status_code}:-** `I can't upload this file.`",
                 disable_web_page_preview=True
@@ -62,15 +64,15 @@ async def media_filter(bot, update):
             disable_web_page_preview=True
         )
         return
-    text = f"**File Name:** `{response['name']}`" + "\n"
-    text += f"**Download Page:** `https://pixeldrain.com/u/{response['id']}`" + "\n"
-    text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{response['id']}`" + "\n"
-    text += f"**Upload Date:** `{response['date_upload']}`"
-    text += f"**Last View Date:** `{response['date_last_view']}`"
-    text += f"**Size:** `{response['size']}`"
-    text += f"**Total Views:** `{response['views']}`"
-    text += f"**Bandwidth Used:** `{response['bandwidth_used']}`"
-    text += f"**Mime Type:** `{response['mime_type']}`"
+    text = f"**File Name:** `{data['name']}`" + "\n"
+    text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
+    text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{data['id']}`" + "\n"
+    text += f"**Upload Date:** `{data['date_upload']}`"
+    text += f"**Last View Date:** `{data['date_last_view']}`"
+    text += f"**Size:** `{data['size']}`"
+    text += f"**Total Views:** `{data['views']}`"
+    text += f"**Bandwidth Used:** `{data['bandwidth_used']}`"
+    text += f"**Mime Type:** `{data['mime_type']}`"
     reply_markup = InlineKeyboardMarkup(
         [
             [
