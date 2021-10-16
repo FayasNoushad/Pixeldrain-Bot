@@ -64,6 +64,7 @@ async def media_filter(bot, update):
             disable_web_page_preview=True
         )
         return
+    print(data)
     text = f"**File Name:** `{data['name']}`" + "\n"
     text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
     text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{data['id']}`" + "\n"
