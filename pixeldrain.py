@@ -1,9 +1,10 @@
 import requests
 
 
-def upload_file(file, name="media"):
-    response = requests.put(
-        "https://pixeldrain.com/api/files/"+name,
+def upload_file(file):
+    response = requests.post(
+        "https://pixeldrain.com/api/file",
+        data={"anonymous": True},
         files={"file": open(file, "rb")}
     )
     if response.status_code != 200:
