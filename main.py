@@ -49,7 +49,7 @@ async def media_filter(bot, update):
             os.remove(media)
         except:
             pass 
-        if response is False:
+        if not response:
             await message.edit_text(
                 text="`I can't upload this file.`",
                 disable_web_page_preview=True
