@@ -50,21 +50,23 @@ async def media_filter(bot, update):
         try:
             os.remove(media)
         except:
-            pass 
+            pass
+        await message.edit_text(
+            text="`Uploaded Successfully!",
+            disable_web_page_preview=True
+        )
         if data["success"] is False:
             await message.edit_text(
-                text=f"**Error {status_code}:-** `I can't upload this file.`",
+                text=f"**Error {status_code}:-** `I can't fetch information of your file.`",
                 disable_web_page_preview=True
             )
             return
     except Exception as error:
         await message.edit_text(
             text=f"Error :- <code>{error}</code>",
-            quote=True,
             disable_web_page_preview=True
         )
         return
-    print(data)
     text = f"**File Name:** `{data['name']}`" + "\n"
     text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
     text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{data['id']}`" + "\n"
@@ -79,11 +81,11 @@ async def media_filter(bot, update):
             [
                 InlineKeyboardButton(
                     text="Open Link",
-                    url=f"https://pixeldrain.com/api/file/{response['id']}"
+                    url=f"https://pixeldrain.com/api/file/{data['id']}"
                 ),
                 InlineKeyboardButton(
                     text="Share Link",
-                    url=f"https://telegram.me/share/url?url=https://pixeldrain.com/api/file/{response['id']}"
+                    url=f"https://telegram.me/share/url?url=https://pixeldrain.com/api/file/{data['id']}"
                 )
             ],
             [
