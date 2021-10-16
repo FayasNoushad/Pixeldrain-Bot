@@ -8,7 +8,7 @@ def upload_file(file):
         files={"file": open(file, "rb")}
     )
     if response.status_code != 200:
-        return response
-    else:
         info = requests.get(f"https://pixeldrain.com/api/file/{response.json()['id']}/info")
         return info
+    else:
+        return response
