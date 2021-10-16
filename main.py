@@ -70,11 +70,11 @@ async def media_filter(bot, update):
     text = f"**File Name:** `{data['name']}`" + "\n"
     text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
     text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{data['id']}`" + "\n"
-    text += f"**Upload Date:** `{data['date_upload']}`"
-    text += f"**Last View Date:** `{data['date_last_view']}`"
-    text += f"**Size:** `{data['size']}`"
-    text += f"**Total Views:** `{data['views']}`"
-    text += f"**Bandwidth Used:** `{data['bandwidth_used']}`"
+    text += f"**Upload Date:** `{data['date_upload']}`" + "\n"
+    text += f"**Last View Date:** `{data['date_last_view']}`" + "\n"
+    text += f"**Size:** `{data['size']}`" + "\n"
+    text += f"**Total Views:** `{data['views']}`" + "\n"
+    text += f"**Bandwidth Used:** `{data['bandwidth_used']}`" + "\n"
     text += f"**Mime Type:** `{data['mime_type']}`"
     reply_markup = InlineKeyboardMarkup(
         [
