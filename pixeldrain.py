@@ -6,9 +6,9 @@ def upload_file(file, name="media"):
         "https://pixeldrain.com/api/files/"+name,
         data={
             "name": name,
-            "anonymous": True,
-            "file": file
-        }
+            "anonymous": True
+        },
+        files={"file": open(file, "rb")}
     )
     if response.status_code != 200:
         return False, response.status_code
