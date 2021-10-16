@@ -51,7 +51,7 @@ async def media_filter(bot, update):
             os.remove(media)
         except:
             pass 
-        if data["status"] is False:
+        if data["success"] is False:
             await message.edit_text(
                 text=f"**Error {status_code}:-** `I can't upload this file.`",
                 disable_web_page_preview=True
