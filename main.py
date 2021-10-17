@@ -81,11 +81,11 @@ async def media_filter(bot, update):
             [
                 InlineKeyboardButton(
                     text="Open Link",
-                    url=f"https://pixeldrain.com/api/file/{data['id']}"
+                    url=f"https://pixeldrain.com/u/{data['id']}"
                 ),
                 InlineKeyboardButton(
                     text="Share Link",
-                    url=f"https://telegram.me/share/url?url=https://pixeldrain.com/api/file/{data['id']}"
+                    url=f"https://telegram.me/share/url?url=https://pixeldrain.com/u/{data['id']}"
                 )
             ],
             [
