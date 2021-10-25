@@ -1,9 +1,3 @@
-# Pixeldrain-Bot
-
-A telegram media to [pixeldrain](https://pixeldrain.com) stream link bot
-
----
-
 ```
 Made with Python3
 (C) @FayasNoushad
@@ -37,3 +31,5 @@ python3 main.py
 
 - [Fayas Noushad](https://github.com/FayasNoushad)
 - [Pyrogram](https://github.com/pyrogram/pyrogram)
+
+---
