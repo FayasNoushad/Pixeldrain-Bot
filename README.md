@@ -10,7 +10,7 @@ License -> https://github.com/FayasNoushad/Pixeldrain-Bot/blob/main/LICENSE
 ## Deploy
 
 ```sh
-git clone https://github.com/FayasNoushad/Pixeldrain-Bot/tree/main
+git clone https://github.com/FayasNoushad/Pixeldrain-Bot.git
 cd Pixeldrain-Bot
 pip3 install -r requirements.txt
 # <Create Variables appropriately>
