@@ -24,6 +24,7 @@ async def start(bot, update):
 @Bot.on_message(filters.private & filters.media)
 async def media_filter(bot, update):
     
+    logs = ""
     message = await update.reply_text(
         text="`Processing...`",
         quote=True,
@@ -37,6 +38,7 @@ async def media_filter(bot, update):
             disable_web_page_preview=True
         )
         media = await update.download()
+        logs += "Download Successfully"
         
         # upload
         await message.edit_text(
@@ -54,6 +56,8 @@ async def media_filter(bot, update):
             text="`Uploaded Successfully!`",
             disable_web_page_preview=True
         )
+        logs += "\n" + "Upload Successfully"
+        
         # not success
         if response["success"] is False:
             await message.edit_text(
@@ -62,11 +66,14 @@ async def media_filter(bot, update):
             )
             return
     except Exception as error:
-        await message.edit_text(
-            text=f"Error :- <code>{error}</code>",
-            disable_web_page_preview=True
-        )
-        return
+        if "MESSAGE_NOT_MODIFIED" in error:
+            pass
+        else:
+            await message.edit_text(
+                text=f"Error :- `{error}`\n\n`{logs}`",
+                disable_web_page_preview=True
+            )
+            return
     
     # pixeldrain data
     data = pixeldrain.info(response.json()["id"])
