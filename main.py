@@ -23,34 +23,41 @@ async def start(bot, update):
 
 @Bot.on_message(filters.private & filters.media)
 async def media_filter(bot, update):
+    
     message = await update.reply_text(
         text="`Processing...`",
         quote=True,
         disable_web_page_preview=True
     )
+    
     try:
+        # download
         await message.edit_text(
             text="`Downloading...`",
             disable_web_page_preview=True
         )
         media = await update.download()
+        
+        # upload
         await message.edit_text(
             text="`Uploading...`",
             disable_web_page_preview=True
         )
         response = pixeldrain.upload_file(media)
-        status_code = response.status_code
+        
         try:
             os.remove(media)
         except:
             pass
+        
         await message.edit_text(
             text="`Uploaded Successfully!`",
             disable_web_page_preview=True
         )
+        # not success
         if response["success"] is False:
             await message.edit_text(
-                text=f"**Error {status_code}:-** `I can't fetch information of your file.`",
+                text=f"**Error {response.status_code}:-** `I can't fetch information of your file.`",
                 disable_web_page_preview=True
             )
             return
@@ -60,6 +67,8 @@ async def media_filter(bot, update):
             disable_web_page_preview=True
         )
         return
+    
+    # pixeldrain data
     data = pixeldrain.info(response.json()["id"])
     text = f"**File Name:** `{data['name']}`" + "\n"
     text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
@@ -87,6 +96,7 @@ async def media_filter(bot, update):
             ]
         ]
     )
+    
     await message.edit_text(
         text=text,
         reply_markup=reply_markup,
