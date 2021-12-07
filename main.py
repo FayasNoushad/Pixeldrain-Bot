@@ -24,7 +24,7 @@ async def start(bot, update):
 @Bot.on_message(filters.private & filters.media)
 async def media_filter(bot, update):
     
-    logs = ""
+    logs = []
     message = await update.reply_text(
         text="`Processing...`",
         quote=True,
@@ -41,7 +41,7 @@ async def media_filter(bot, update):
         except:
             pass
         media = await update.download()
-        logs += "Download Successfully"
+        logs.append("Download Successfully")
         
         # upload
         try:
@@ -64,24 +64,24 @@ async def media_filter(bot, update):
             )
         except:
             pass
-        logs += "\n" + "Upload Successfully"
+        logs.append("Upload Successfully")
         
         # not success
-        if response.json()["success"] is False:
+        if response["success"] is False:
             await message.edit_text(
-                text=f"**Error {response.status_code}:-** `I can't fetch information of your file.`",
+                text=f"**Error :-** `I can't fetch information of your file.`",
                 disable_web_page_preview=True
             )
             return
     except Exception as error:
         await message.edit_text(
-            text=f"Error :- `{error}`\n\n`{logs}`",
+            text=f"Error :- `{error}`\n\n`{'\n'.join(logs)}`",
             disable_web_page_preview=True
         )
         return
     
     # pixeldrain data
-    data = pixeldrain.info(response.json()["id"])
+    data = pixeldrain.info(response["id"])
     text = f"**File Name:** `{data['name']}`" + "\n"
     text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
     text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{data['id']}`" + "\n"
