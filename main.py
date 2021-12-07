@@ -67,7 +67,7 @@ async def media_filter(bot, update):
         logs += "\n" + "Upload Successfully"
         
         # not success
-        if response["success"] is False:
+        if response.json()["success"] is False:
             await message.edit_text(
                 text=f"**Error {response.status_code}:-** `I can't fetch information of your file.`",
                 disable_web_page_preview=True
