@@ -33,29 +33,37 @@ async def media_filter(bot, update):
     
     try:
         # download
-        await message.edit_text(
-            text="`Downloading...`",
-            disable_web_page_preview=True
-        )
+        try:
+            await message.edit_text(
+                text="`Downloading...`",
+                disable_web_page_preview=True
+            )
+        except:
+            pass
         media = await update.download()
         logs += "Download Successfully"
         
         # upload
-        await message.edit_text(
-            text="`Uploading...`",
-            disable_web_page_preview=True
-        )
+        try:
+            await message.edit_text(
+                text="`Uploading...`",
+                disable_web_page_preview=True
+            )
+        except:
+            pass
         response = pixeldrain.upload_file(media)
         
         try:
             os.remove(media)
         except:
             pass
-        
-        await message.edit_text(
-            text="`Uploaded Successfully!`",
-            disable_web_page_preview=True
-        )
+        try:
+            await message.edit_text(
+                text="`Uploaded Successfully!`",
+                disable_web_page_preview=True
+            )
+        except:
+            pass
         logs += "\n" + "Upload Successfully"
         
         # not success
@@ -66,14 +74,11 @@ async def media_filter(bot, update):
             )
             return
     except Exception as error:
-        if "MESSAGE_NOT_MODIFIED" in error:
-            pass
-        else:
-            await message.edit_text(
-                text=f"Error :- `{error}`\n\n`{logs}`",
-                disable_web_page_preview=True
-            )
-            return
+        await message.edit_text(
+            text=f"Error :- `{error}`\n\n`{logs}`",
+            disable_web_page_preview=True
+        )
+        return
     
     # pixeldrain data
     data = pixeldrain.info(response.json()["id"])
