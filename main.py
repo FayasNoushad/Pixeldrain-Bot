@@ -75,7 +75,7 @@ async def media_filter(bot, update):
             return
     except Exception as error:
         await message.edit_text(
-            text=f"Error :- `{error}`\n\n`{'\n'.join(logs)}`",
+            text=f"Error :- `{error}`"+"\n\n"+'\n'.join(logs),
             disable_web_page_preview=True
         )
         return
