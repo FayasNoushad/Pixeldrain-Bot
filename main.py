@@ -66,10 +66,16 @@ async def media_filter(bot, update):
             pass
         logs.append("Upload Successfully")
         
-        # not success
-        if response["success"] is False:
+        # after upload
+        if response["success"]:
+            logs.append("Success is True")
+            data = pixeldrain.info(response["id"])
+        else:
+            logs.append("Success is False")
+            value = response["value"]
+            error = response["message"]
             await message.edit_text(
-                text=f"**Error :-** `I can't fetch information of your file.`",
+                text=f"**Error {value}:-** `{error}`",
                 disable_web_page_preview=True
             )
             return
@@ -81,7 +87,6 @@ async def media_filter(bot, update):
         return
     
     # pixeldrain data
-    data = pixeldrain.info(response["id"])
     text = f"**File Name:** `{data['name']}`" + "\n"
     text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
     text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{data['id']}`" + "\n"
