@@ -1,5 +1,5 @@
 # Pixeldrain Bot
-A telegram media to pixeldrain uploder bot
+A telegram media to pixeldrain uplod bot
 
 ---
 
