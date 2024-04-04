@@ -1,5 +1,5 @@
 import os
-import time
+import asyncio
 import dotenv
 import pixeldrain
 from pyrogram import Client, filters
@@ -52,12 +52,7 @@ async def send_data(id, message):
     try:
         data = pixeldrain.info(id)
     except:
-        try:
-            print("sleep")
-            time.sleep(2)
-            data = pixeldrain.info(id)
-        except:
-            data = None
+        data = None
     text = ""
     if data:
         text += f"**File Name:** `{data['name']}`" + "\n"
@@ -120,6 +115,7 @@ async def media_filter(bot, update):
         disable_web_page_preview=True
     )
     
+    await asyncio.sleep(3)
     try:
         # download
         try:
@@ -141,11 +137,11 @@ async def media_filter(bot, update):
         except:
             pass
         response = pixeldrain.upload_file(media)
-        # sleep
-        
+        logs.append("Upload Successfully")
         
         try:
             os.remove(media)
+            logs.append("Remove media")
         except:
             pass
         try:
@@ -155,7 +151,6 @@ async def media_filter(bot, update):
             )
         except:
             pass
-        logs.append("Upload Successfully")
         
         # after upload
         if response["success"]:
