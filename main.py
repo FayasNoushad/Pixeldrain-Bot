@@ -1,4 +1,5 @@
 import os
+import time
 import dotenv
 import pixeldrain
 from pyrogram import Client, filters
@@ -50,8 +51,13 @@ async def send_data(id, message):
     # pixeldrain data
     try:
         data = pixeldrain.info(id)
-    except Exception as error:
-        data = None
+    except:
+        try:
+            print("sleep")
+            time.sleep(2)
+            data = pixeldrain.info(id)
+        except:
+            data = None
     text = ""
     if data:
         text += f"**File Name:** `{data['name']}`" + "\n"
