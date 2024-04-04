@@ -48,26 +48,32 @@ def get_id(text):
 
 async def send_data(id, message):
     # pixeldrain data
-    data = pixeldrain.info(id)
-    text = f"**File Name:** `{data['name']}`" + "\n"
-    text += f"**Download Page:** `https://pixeldrain.com/u/{data['id']}`" + "\n"
-    text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{data['id']}`" + "\n"
-    text += f"**Upload Date:** `{data['date_upload']}`" + "\n"
-    text += f"**Last View Date:** `{data['date_last_view']}`" + "\n"
-    text += f"**Size:** `{data['size']}`" + "\n"
-    text += f"**Total Views:** `{data['views']}`" + "\n"
-    text += f"**Bandwidth Used:** `{data['bandwidth_used']}`" + "\n"
-    text += f"**Mime Type:** `{data['mime_type']}`"
+    try:
+        data = pixeldrain.info(id)
+    except Exception as error:
+        data = None
+    text = ""
+    if data:
+        text += f"**File Name:** `{data['name']}`" + "\n"
+    text += f"**Download Page:** `https://pixeldrain.com/u/{id}`" + "\n"
+    text += f"**Direct Download Link:** `https://pixeldrain.com/api/file/{id}`" + "\n"
+    if data:
+        text += f"**Upload Date:** `{data['date_upload']}`" + "\n"
+        text += f"**Last View Date:** `{data['date_last_view']}`" + "\n"
+        text += f"**Size:** `{data['size']}`" + "\n"
+        text += f"**Total Views:** `{data['views']}`" + "\n"
+        text += f"**Bandwidth Used:** `{data['bandwidth_used']}`" + "\n"
+        text += f"**Mime Type:** `{data['mime_type']}`"
     reply_markup = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
                     text="Open Link",
-                    url=f"https://pixeldrain.com/u/{data['id']}"
+                    url=f"https://pixeldrain.com/u/{id}"
                 ),
                 InlineKeyboardButton(
                     text="Share Link",
-                    url=f"https://telegram.me/share/url?url=https://pixeldrain.com/u/{data['id']}"
+                    url=f"https://telegram.me/share/url?url=https://pixeldrain.com/u/{id}"
                 )
             ],
             [BUTTON]
@@ -129,6 +135,8 @@ async def media_filter(bot, update):
         except:
             pass
         response = pixeldrain.upload_file(media)
+        # sleep
+        
         
         try:
             os.remove(media)
@@ -161,8 +169,6 @@ async def media_filter(bot, update):
             text=f"Error :- `{error}`"+"\n\n"+'\n'.join(logs),
             disable_web_page_preview=True
         )
-    
-    
 
 
 Bot.run()
