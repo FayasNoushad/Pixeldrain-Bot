@@ -20,13 +20,16 @@ You can also send pixeldrain media ID or link to get more info.
 
 Made by @FayasNoushad"""
 
+BUTTON = InlineKeyboardButton(text="Feedback", url="https://telegram.me/FayasNoushad")
+
 
 @Bot.on_message(filters.private & filters.command("start"))
 async def start(bot, update):
     await update.reply_text(
         text=START_TEXT.format(update.from_user.mention),
         disable_web_page_preview=True,
-        quote=True
+        quote=True,
+        reply_markup=InlineKeyboardMarkup([[BUTTON]])
     )
     
 
@@ -67,9 +70,7 @@ async def send_data(id, message):
                     url=f"https://telegram.me/share/url?url=https://pixeldrain.com/u/{data['id']}"
                 )
             ],
-            [
-                InlineKeyboardButton(text="Feedback", url="https://telegram.me/FayasNoushad")
-            ]
+            [BUTTON]
         ]
     )
     
