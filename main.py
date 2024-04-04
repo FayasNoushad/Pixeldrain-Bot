@@ -1,5 +1,4 @@
 import os
-import asyncio
 import dotenv
 import pixeldrain
 from pyrogram import Client, filters
@@ -115,7 +114,6 @@ async def media_filter(bot, update):
         disable_web_page_preview=True
     )
     
-    await asyncio.sleep(3)
     try:
         # download
         try:
@@ -131,26 +129,30 @@ async def media_filter(bot, update):
         # upload
         try:
             await message.edit_text(
-                text="`Uploading...`",
+                text="`Download Successfully, Now Uploading...`",
                 disable_web_page_preview=True
             )
         except:
             pass
-        response = pixeldrain.upload_file(media)
-        logs.append("Upload Successfully")
-        
         try:
-            os.remove(media)
-            logs.append("Remove media")
-        except:
-            pass
-        try:
+            response = pixeldrain.upload_file(media)
+            logs.append("Upload Successfully")
+            try:
+                os.remove(media)
+                logs.append("Remove media")
+            except:
+                pass
             await message.edit_text(
                 text="`Uploaded Successfully!`",
                 disable_web_page_preview=True
             )
-        except:
-            pass
+        except Exception as error:
+            logs.append("Not Uploading")
+            await message.edit_text(
+                text=f"Error :- `{error}`"+"\n\n"+'\n'.join(logs),
+                disable_web_page_preview=True
+            )
+            return
         
         # after upload
         if response["success"]:
